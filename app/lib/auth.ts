@@ -1,9 +1,11 @@
+"use server";
+
 export const authFetch = async (url: string) => {
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": "d2846e6954cf44f98f5b44bb0b58ef11",
+      "x-api-key": process.env.RECIPE_API_KEY as string,
     },
   });
-  return response;
+  return response.json();
 };

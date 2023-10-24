@@ -10,7 +10,9 @@ export const useSearchedRecipes = (query: string) => {
     const offset = page * perPage;
     const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&maxFat=20&number=${perPage}&offset=${offset}`;
     const response = await authFetch(apiUrl);
-    return response.json();
+    console.log(response.results);
+
+    return response;
   };
 
   const { data, fetchNextPage, error, status, isFetching, hasNextPage } =

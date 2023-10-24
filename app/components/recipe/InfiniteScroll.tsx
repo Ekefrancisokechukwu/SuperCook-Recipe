@@ -14,7 +14,7 @@ type Props = {
 };
 
 const InfiniteScroll = ({ query = "banane" }: Props) => {
-  const { data, fetchNextPage, isFetching, status, hasNextPage } =
+  const { data, fetchNextPage, isFetching, status, error, hasNextPage } =
     useSearchedRecipes(query);
   const { ref, inView } = useInView();
 
@@ -33,7 +33,7 @@ const InfiniteScroll = ({ query = "banane" }: Props) => {
               <BiSolidMessageAltError />
             </h2>
             <h5 className="text-base text-gray-700">
-              Oops: Something went wrong
+              Oops: Something went wrong {error?.message}
             </h5>
           </div>
         </div>
