@@ -1,4 +1,3 @@
-import { useAppContext } from "@/context/context";
 import { FaRotate } from "react-icons/fa6";
 
 type props = {
@@ -16,13 +15,18 @@ const SearchResults = ({
 }: props) => {
   const SearchHistory = () => {
     return (
-      <ul>
+      <ul className="">
+        {searchHistory.length === 0 && (
+          <h1 className="text-gray-500 text-center mt-20">
+            Start Searching for recipes...
+          </h1>
+        )}
         {searchHistory.slice(0, 7).map((search, i) => {
           return (
             <li
               key={i}
               onClick={() => handleItemClick(search)}
-              className="flex items-center cursor-pointer py-2.5  px-9 hover:bg-gray-200 transition-colors gap-x-8 w-full"
+              className="flex items-center cursor-pointer group py-2.5  px-9 hover:bg-gray-200 transition-colors gap-x-8 w-full"
             >
               <FaRotate />
               <span>{search}</span>

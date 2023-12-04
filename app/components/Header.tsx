@@ -1,9 +1,14 @@
-import Search from "./search/Search";
 import { TbUserSquareRounded } from "react-icons/tb";
 import { LiaLanguageSolid } from "react-icons/lia";
-import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { openRegiter } from "@/redux/features/user/userSlice";
+import { FaHeart } from "react-icons/fa";
+import { openPopup } from "@/redux/features/favourite/favouriteSlice";
 
 const Header = () => {
+  const dispatch = useAppDispatch();
+  const { favourites } = useAppSelector((state) => state.favouriteState);
+
   return (
     <header>
       <div className="text-white flex justify-between  items-center">
@@ -14,9 +19,15 @@ const Header = () => {
         </div>
 
         <div className="text-3xl flex gap-x-4">
-          <Link href={"/register"}>
+          {favourites.length >= 1 && (
+            <button onClick={() => dispatch(openPopup())}>
+              <FaHeart className="text-base" />
+            </button>
+          )}
+
+          <button onClick={() => dispatch(openRegiter())}>
             <TbUserSquareRounded />
-          </Link>
+          </button>
           <button>
             <LiaLanguageSolid />
           </button>

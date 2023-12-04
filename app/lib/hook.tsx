@@ -1,17 +1,14 @@
 "use client";
 
 import { authFetch } from "./auth";
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import { useAppContext } from "@/context/context";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export const useSearchedRecipes = (query: string) => {
   const fetchRecipes = async (page: number) => {
     const perPage = 20;
     const offset = page * perPage;
-    const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&maxFat=20&number=${perPage}&offset=${offset}`;
+    const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=${perPage}&offset=${offset}&maxFat=20&sort=vitamin-b5&sortDirection=asc`;
     const response = await authFetch(apiUrl);
-    console.log(response.results);
-
     return response;
   };
 
