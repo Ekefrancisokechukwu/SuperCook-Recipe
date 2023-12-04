@@ -1,4 +1,5 @@
 "use server";
+import axios from "axios";
 
 export const authFetch = async (url: string) => {
   const response = await fetch(url, {
@@ -9,3 +10,10 @@ export const authFetch = async (url: string) => {
   });
   return response.json();
 };
+
+const productionUrl =
+  " https://strapi-store-server.onrender.com/api/auth/local/register";
+
+export const customUser = axios.create({
+  baseURL: productionUrl,
+});

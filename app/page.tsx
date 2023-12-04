@@ -3,20 +3,29 @@
 import Header from "./components/Header";
 import RecipeInfo from "./components/recipeInformation/RecipeInfo";
 import { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import { useAppContext } from "@/context/context";
 import InfiniteScroll from "./components/recipe/InfiniteScroll";
 import Search from "./components/search/Search";
 import ScrollToTopBtn from "./components/ScrollToTopBtn";
+import { useRouter, useSearchParams } from "next/navigation";
+import Filters from "./components/filter/Filters";
 import { useSearchedRecipes } from "./lib/hook";
+import Register from "./components/register/Register";
+import { useAppSelector } from "@/redux/store";
+import Favourites from "./components/favourite/Favourites";
 
 export default function Home() {
-  const { searchParams } = useAppContext();
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query") || "";
+  const { data } = useSearchedRecipes(query);
+  const isRegister = useAppSelector((state) => state.userState.isRegister);
+  const isPopup = useAppSelector((state) => state.favouriteState.isPopup);
 
-  const handleSearch = () => {
-    if (searchParams === "") return;
-    updateSearchHistory(searchParams);
+  const handleSearch = (query: string) => {
+    if (query === "") return;
+    router.push(`?query=${query}`);
+    updateSearchHistory(query);
   };
 
   const updateSearchHistory = (query: string) => {
@@ -46,8 +55,10 @@ export default function Home() {
       </div>
 
       <RecipeInfo />
-      <InfiniteScroll query={""} />
+      <InfiniteScroll query={query} />
       <ScrollToTopBtn />
+      {isRegister && <Register />}
+      {isPopup && <Favourites />}
     </main>
   );
 }

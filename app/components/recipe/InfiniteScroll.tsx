@@ -13,7 +13,7 @@ type Props = {
   query: string;
 };
 
-const InfiniteScroll = ({ query = "banane" }: Props) => {
+const InfiniteScroll = ({ query }: Props) => {
   const { data, fetchNextPage, isFetching, status, error, hasNextPage } =
     useSearchedRecipes(query);
   const { ref, inView } = useInView();

@@ -2,22 +2,18 @@
 
 import {
   ReactNode,
-  ChangeEvent,
+  SetStateAction,
   createContext,
   useContext,
   useState,
-  SetStateAction,
-  Dispatch,
 } from "react";
 
 type AppProviderType = {
   isRecipeOpen: boolean;
+
   recipeId: number | null;
-  searchParams: string;
   openRecipeInfo: (id: number) => void;
   closeRecipeInfo: () => void;
-  HandleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
-  setSearchParams: Dispatch<SetStateAction<string>>;
 };
 
 const AppContext = createContext<AppProviderType | null>(null);
@@ -25,15 +21,10 @@ const AppContext = createContext<AppProviderType | null>(null);
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isRecipeOpen, setisRecipeOpen] = useState<boolean>(false);
   const [recipeId, setRecipeId] = useState<number | null>(null);
-  const [searchParams, setSearchParams] = useState("cake");
 
   const openRecipeInfo = (id: number) => {
     setisRecipeOpen(true);
     setRecipeId(id);
-  };
-
-  const HandleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchParams(e.target.value);
   };
 
   const closeRecipeInfo = () => {
@@ -44,12 +35,10 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider
       value={{
         isRecipeOpen,
-        searchParams,
         recipeId,
-        HandleSearch,
         openRecipeInfo,
+
         closeRecipeInfo,
-        setSearchParams,
       }}
     >
       {children}
